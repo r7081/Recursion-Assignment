@@ -1,0 +1,126 @@
+﻿Q1 : Given an integer, find out the sum of its digits using recursion. 
+Input: n=1234
+Output: 10
+Explanation: 1+2+3+4=10
+import java.io.*;
+import java.util.*;
+
+
+
+
+public class Main
+{   static int func(int n)
+{
+    if (n == 0)
+    return 0;
+    return (n % 10 + func(n / 10));
+}
+        public static void main(String[] args) {
+                System.out.println("Enter the number");
+                Scanner sc = new Scanner(System.in);
+                int n=sc.nextInt();
+                int ans = func(n);
+                System.out.println(" Sum of digits in " + n
+       + " is " + ans );
+        }
+}
+Approach :
+Let's define a function func which will take a number as input and will return the sum of all of its digits. now this function can we written in this way first digit + sum of remaining digit (the same way human do sum in left to right manner) but as extracting first digit is relatively tough thus we will start with last digit so the function func(num) can be written as func(num) = last_digit + func(num after removing last digit). Now to get the last digit we can use % operator and to remove the last digit we can use / operator. Let's see the step-by-step approach for a better understanding of how the algorithm works.  Let the number be 1234.  Step 1-> 1234 % 10 which is equal-to 4 + ( send 1234/10 to next step )  Step 2-> 123 % 10 which is equal-to 3 + ( send 123/10 to next step )  Step 3-> 12 % 10 which is equal-to 2 + ( send 12/10 to next step )  Step 4-> 1 % 10 which is equal-to 1 + ( send 1/10 to next step )  Step 5-> 0 algorithm stops.
+
+
+Q2: Given a number n. Find the sum of natural numbers till n but with alternate signs. That means if n = 5 then you have to return 1-2+3-4+5 = 3 as your answer. Constraints : 0<=n<=1e6
+Input : n=10
+Output : -5
+Explanation : 1-2+3-4+5-6+7-8+9-10=-5
+import java.io.*;
+import java.util.*;
+
+
+public class Main
+{   static int go(int n  , int i){
+    if(i == n + 1)return 0;
+    if(i%2 == 0)return go(n , i + 1) - i;
+    else return go(n , i + 1) + i;
+}
+        public static void main(String[] args) {
+           
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        System.out.println(go(n,1));
+   
+
+
+        }
+}
+Approach :  
+ Here,we have created a go function of int type to get the sum of natural numbers with alternate signs till given n  We have passed 2 parameters ,n (the number till you want the alternating sequence sum) , a variable i (to keep track of odd and even numbers)   If i has reached n+1(base case condition) that means we have already calculated the sum of the sequence 
+
+
+Q3:  Print the max value of the array [ 13, 1, -3, 22, 5].
+import java.io.*;
+import java.util.*;
+public class Main{
+    public static int maxValue(int arr[], int n, int idx){
+        if(idx == n - 1)
+        return arr[n - 1];
+        int maxOfLaterIndices = maxValue(arr, n,idx + 1);
+        int maxVal = Math.max(arr[idx], maxOfLaterIndices);
+        return maxVal;
+    }
+    public static void main(String[] args) {
+        int[] arr={13,1,-3,22,5};
+        int n=arr.length;
+        System.out.println("The max value is : " + maxValue(arr,n,0));
+    }
+}
+
+
+Q4 : Find the sum of the values of the array [92, 23, 15, -20, 10].
+import java.util.*;
+import java.util.Scanner;
+public class Main{
+    public static int totalSum(int []arr , int idx){
+        if(idx == 0)return arr[idx];
+        
+        return arr[idx] + totalSum(arr , idx - 1);
+    }
+    public static void main(String[] args){
+        int arr[] = {92,23, 15, -20, 10};
+        int n = arr.length;
+        
+        System.out.println("The sum of all elements of the array is : " + totalSum(arr , n - 1));
+    }
+}
+
+
+Q5. Given a number n. Print if it is an armstrong number or not. An armstrong number is a number if the sum of every digit in that number raised to the power of total digits in that number is equal to the number. Example : 153 = 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153 hence 153 is an armstrong number. (Easy)
+Solution :
+import java.util.*;
+import java.util.Scanner;
+public class Main{
+        public static void main(String[] args){
+                Scanner scn = new Scanner(System.in);
+                System.out.println("Enter the number n: ");
+                int n = scn.nextInt();
+                int digits = 0;
+                int temp = n;
+                while(temp > 0){
+                        digits++;
+                        temp/=10;
+                }
+                if(n == isArmstrong(n , digits))
+                        System.out.println("yes");
+                else
+                        System.out.println("no");
+        }
+        public static int power(int a, int b){
+                if(b == 0)return 1;
+                if(b%2 == 0)return power(a , b/2) * power(a , b/2);
+                return a * power(a  , b/2) * power(a , b/2);
+        }
+        public static int isArmstrong(int n , int digits){
+                if(n == 0)return 0;
+                return power(n%10 , digits) + isArmstrong(n/10 , digits);
+        }
+}
+Approach :´ 6 Firs7, we calcula7ed a power func7ion which calcula7es 7he power of any number a raised 7o 7he power b@ 6 If b = 0, i7 means 7ha7 7he power 7o which 7he number needs 7o be raised is zero, 7hen 7he value is equal 7o 1 and 7his would be our base case from where we need 7o 7ermina7e 7his code@ 6  If 7he power is even 7hen 7he number can be spli77ed in half power.¶ 6 If 7he power is odd 7hen 7he number can be spli77ed in half power and 1 addi7ional ‘a’ value can be mul7iplied ex7ernally@ 6 Crea7e ano7her func7ion where we pass 7wo parame7ers n(7he original number) and dig(number of digi7s in 7he number) . Now we need every single digi7 of 7he number raised 7o ‘dig’ power. To ex7rac7 any digi7 we can do n%10 7his will give us 7he las7 digi7 of 7he number. Bu7 since we only wan7 sum and na7ure of sum is commu7a7ive, 7ha7 is in any order we do 7he sum i7 is independen7 of 7he order.¶ 6 Af7er ex7rac7ing 7he las7 digi7 we do no7 need i7 any more so we will pass 7he value n/10 7o 7he nex7 recursive call and 7his will be repea7ed un7il n does no7 7urn ou7 7o be 0. Once n = 0 7ha7 means we have 7ouched 7he base case where i7 shows 7ha7 no digi7 is lef7 in 7he original number@ 6 In 7he main func7ion we calcula7e 7he number of digi7s presen7 in ‘n’. The number of 7imes we are required 7o divide n by 10 7ill i7 becomes zero indica7es 7he number  of digi7s in 7ha7 number. Eg. le7 n = 1234
